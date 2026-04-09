@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine Course</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.11/dist/cdn.min.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <!-- x-data, x-text, x-html 
+     
+    <div x-data="{name: 'Bojan', message: 'Hello <b>World</b>'}">
+        <p x-text="name"></p>
+        <p x-html="message"></p>
+    </div>
+    <div
+        x-data
+        x-text="await (await fetch('https://jsonplaceholder.typicode.com/todos/1')).text()"
+    ></div>-->
+
+    <!-- x-data with methods 
+
+    <div x-data="
+        {
+            message: 'Click to change', 
+            change() {
+                this.message = this.message == 'Click to change' ? 'Changed message' : 'Click to change'
+            }
+        }"
+    >
+        <span x-text="message" @click="change()">
+
+        </span>
+    </div> -->
+
+    <!-- Reusable data 
+
+    <div x-data="dropdown"
+    >
+        <button @click="toggle">Open/Close</button>
+        <div x-show="open">
+            Content... 
+        </div>
+    </div>
+
+    <div x-data="dropdown"
+    >
+        <button @click="toggle">Open/Close</button>
+        <div x-show="open">
+            Another Content... 
+        </div>
+    </div>-->
+
+    <!-- Data-Less Components (Without any data, just to call some event) 
+
+    <div x-data @click="alert('Something')">
+        Click me 
+    </div>-->
+
+    <!-- Data comming from Store (Declared in app.js as .store()) 
+
+    <div x-data x-text="$store.currentUser.username"></div>-->
+
+    <!-- x-init 
+
+    <div x-init="console.log('Init')"></div>
+
+    <div x-data="{
+        init() {
+            console.log('I am initialized')
+        }
+    }"></div>
+
+    <div 
+        x-data="{todo: {}}"
+        x-init="todo = await ((await fetch('https://jsonplaceholder.typicode.com/todos/1')).json())"
+    >
+        <p x-text="todo.title"></p>
+    </div>-->
+
+    <!-- Scoping 
+
+    <div x-data="{
+            name: 'Đuro',
+            age: 39,
+            gender: 'male'
+        }"
+    >
+        <div x-data="{name: 'John', age: 25}">
+            <div x-data="{name: 'Mary'}">
+                <p x-text="name"></p>
+                <p x-text="age"></p>
+                <p x-text="gender"></p>
+            </div>
+        </div>
+    </div>-->
+
+    <!-- Getters & Setters -->
+    <!--
+    <div x-data="{
+            open: false,
+            get isOpen() {
+                return this.open
+            },
+            set isOpen(open) {
+                this.open = open
+            },
+            toggle() {
+                this.isOpen = !this.isOpen
+            }
+        }"
+    >
+        <button @click="toggle()">Open-Close</button>
+        <div x-show="open">
+            3rd Content
+        </div>
+    </div>-->
+
+    <!-- x-show & x-transition -->
+    <!--
+    <div x-data="{
+            open: false,
+            toggle() {
+                this.open = !this.open
+            }
+        }"
+    >
+        <button @click="toggle()">Open-Close</button>
+        <div 
+            x-show="open" 
+            x-transition:enter.duration.400ms
+            x-transition:leave.duration.1000ms
+        >
+            3rd Content
+
+            
+        </div>
+    </div> -->
+
+    <!-- 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-90"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-300"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-90" 
+    -->
+
+    <!-- x-if -->
+    <!--
+    <div x-data="{
+            open: false,
+            toggle() {
+                this.open = !this.open
+            }
+        }"
+    >
+        <button @click="toggle()">Open-Close</button>
+        <template x-if="open">
+            <div >3rd Content</div>
+        </template>
+    </div>-->
+
+    <!-- x-for 
+
+    <div x-data="{
+        posts: [{id: 1, title: 'Post 1'}, {id: 2, title: 'Post 2'}]
+    }">
+        <template x-for="p in posts" :key="p.id">
+            <h2 x-text="p.title"></h2>
+        </template>
+    </div> -->
+
+    <!-- x-for in range -->
+    <!--
+    <div x-data>
+        <template x-for="n in 5">
+            <p x-text="n"></p>
+        </template>
+    </div>-->
+
+    <!-- x-bind: class -->
+    <!--
+    <div x-data="{clicked: false}">
+        <button class="bordered" :class="clicked ? 'yellow' : '' " @click="clicked = true">
+            Click me
+        </button>
+    </div>
+    <div x-data="{clicked: false}">
+        <button class="bordered" :class="{yellow: !clicked}" @click="clicked = true">
+            Click me
+        </button>
+    </div>
+    <style>
+        .bordered {
+            border: 0.2rem solid black;
+        }
+        .yellow {
+            background-color: yellow;
+        }
+    </style>-->
+
+    <!-- x-bind: style 
+
+    <div x-data="{clicked: false}">
+        <button :style="{backgroundColor: clicked ? 'red' : '' }" @click="clicked = !clicked">
+            Click me
+        </button>
+    </div>-->
+
+    <!-- Chalenge -->
+    <!-- Iterate over colors and display 40x40 px boxes with given colors 
+    <div x-data="{colors: ['red', 'green', 'blue']}">
+        <template x-for="c in colors">
+            <div class="box" :style="{backgroundColor: c}"></div>
+        </template>
+    </div>
+
+    <style>
+        .box {
+            width: 40px;
+            height: 40px;
+            margin: 2px;
+            display: inline-block;
+        }
+    </style>-->
+
+    <!-- x-on Events 
+    <div x-data @scroll.window="console.log('Scroll')" @edit="console.log('edit was triggered')">
+        <button @click="console.log('Clicked 1', $event)">Click 1</button>
+        <input type="text" placeholder="every key" @keyup="console.log('Keyup')">
+        <input type="text" placeholder="enter only" @keyup.enter="console.log('Keyup.enter')">
+
+        <div x-data="{modal: false}">
+            <button @click="modal = !modal">Show Modal</button>
+            <div x-show="modal" @click.outside="modal = false">
+                Modal Content.... Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse blanditiis optio labore earum accusamus recusandae, repellendus hic dolorem, voluptates exercitationem quis suscipit facilis doloremque. Assumenda similique iste voluptatem? Nulla, odit.
+            </div>
+        </div>
+
+        <input type="text" placeholder="once" @keyup.once="console.log('Once')">
+        <input type="text" placeholder="debounce" @keyup.debounce="console.log('debounce')">
+        <input type="text" placeholder="throttle" @keyup.throttle="console.log('throttle')">
+
+        <button @click="$dispatch('edit', { foo: 'bar' })">Edit</button>
+    </div> -->
+
+    <!-- x-model 
+
+    <div x-data="{keyword: null}">
+        <input type="text" x-model.debounce.300ms="keyword" placeholder="Search for items">
+        <p x-text="keyword"></p>
+    </div>-->
+
+    <!-- Challenge 
+
+    <div 
+        x-data="{
+            text: null,
+            color: null,
+            id: null
+        }"
+    >
+        <input type="text" x-model="text"  placeholder="Text">
+        <input type="text" x-model="color"  placeholder="Color">
+        <input type="text" x-model="id"  placeholder="ID">
+
+        <p x-text="text"></p>
+
+        <button :style="{backgroundColor: color}" x-text="text" :id="id"> </button>
+    </div>-->
+
+    <!-- x-efect -->
+
+    <div x-data="{name: 'Bojan', message: null}">
+        <p x-effect="message = 'Hello ' + name"></p>
+        <p x-text="message"></p>
+        <button @click="name = 'John'">Change name</button>
+    </div>
+</body>
+</html>
