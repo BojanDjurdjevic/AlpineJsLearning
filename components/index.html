@@ -12,7 +12,7 @@
     <!-- Dropdown 1:51:00 -->
     <div x-data="{open: false}">
         <button 
-            class="py-2 px-6 bg-purple-600 hover:bg-opacity-95 text-white rounded-md shadow
+            class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
             inline-flex items-center" 
             @click="open = !open"
         >Toggle
@@ -45,6 +45,75 @@
     </div>
 
     <!-- Modal -->
+
+    <div 
+        x-data="{
+            open: false,
+            accept() {
+                console.log('accepted')
+            }
+    }">
+        <button
+            class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
+            inline-flex items-center"
+            @click="open = !open"
+        >Toggle Modal
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                class="size-5 ml-2 transition-all"
+                :class="{ 'rotate-90': open }"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+        <!-- Backdrop -->
+         <div x-show="open" x-transition
+            class="fixed flex justify-center items-center left-0 top-0 bottom-0 right-0 z-10 bg-black/30"
+         >
+            <!-- Dialog -->
+             <div @click.outside="open = false" 
+                class="w-1/2 bg-white rounded-lg"
+             >
+                <!-- Modal title -->
+                 <div class="py-2 px-4 text-lg font-semibold bg-gray-100 rounded-t-lg
+                        flex items-center justify-between" 
+                 >
+                    <h2>Modal Title </h2>
+                    <button @click="open = false">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                            class="size-6 hover:cursor-pointer"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    
+
+                 </div>
+                 <!--  <Modal body-->
+                 <div class="p-4 ">
+                    Modal Content 
+                 </div>
+                 <!-- Modal footer -->
+                  <div class="py-2 px-4 text-lg flex justify-end font-semibold bg-gray-100 rounded-b-lg">
+                    <button
+                        class="ml-1 py-1 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-md shadow
+                        inline-flex items-center"
+                        @click="accept"
+                    >
+                        Accept
+                    </button>
+                    <button
+                        class="ml-1 py-1 px-3 bg-gray-400 hover:bg-gray-300 text-gray-900 rounded-md shadow
+                        inline-flex items-center"
+                        @click="open = false"
+                    >
+                        Cancel
+                    </button>
+                  </div>
+             </div>
+         </div>
+    </div>
+
+    <!-- 2:10:00 -->
 
     <!-- Tabs -->
 
