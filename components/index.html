@@ -173,8 +173,22 @@
         }
     }">
         <div class="relative flex items-center justify-center">
-            <img :src="activeImage" alt="" >
-            <a href="#" @click.prevent="prev" class="absolute left-0 top-1/2 text-white">
+            <template x-for="image in images">
+                <div
+                    x-show="activeImage === image" 
+                    class="aspect-w-3 aspect-h-2"
+                >
+                    <img 
+                        x-show="activeImage === image" 
+                        :src="image" alt=""
+                        x-transition:enter 
+                        class="object-cover"
+                    >
+                </div>
+                
+            </template>
+            
+            <a href="" @click.prevent="prev" class="absolute left-0 top-1/2 text-white">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
@@ -185,6 +199,7 @@
                 </svg>
             </a>
         </div>
+        <!-- 2:54:00 -->
         <!--
         <div class="flex">
             <img src="img/1.jpg" alt="">
@@ -192,7 +207,7 @@
             <img src="img/3.jpg" alt="">
         </div>-->
     </div>
-    <!-- 2:10:00 -->
+    
     <!-- Accordion -->
 
     <!-- Notification -->
