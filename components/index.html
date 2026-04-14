@@ -9,7 +9,7 @@
     <script src="app.js"></script>
 </head>
 <body class="bg-gray-100 p-6">
-    <!-- Dropdown 1:51:00 -->
+    <!-- Dropdown  -->
     <div x-data="{open: false}">
         <button 
             class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
@@ -199,19 +199,151 @@
                 </svg>
             </a>
         </div>
-        <!-- 2:54:00 -->
-        <!--
+        
+        
         <div class="flex">
-            <img src="img/1.jpg" alt="">
-            <img src="img/2.jpg" alt="">
-            <img src="img/3.jpg" alt="">
-        </div>-->
+            <template x-for="image in images">
+                <a 
+                    @click="activeImage = image"
+                    class="cursor-pointer w-[100px] border border-gray-300 hover:border-purple-500 flex items-center justify-center"
+                    :class="{'border-indigo-600': activeImage === image }"
+                ><img :src="image" alt="" class="object-cover"></a>
+                <a 
+                    @click="activeImage = image"
+                    class="cursor-pointer w-[100px] border border-gray-300 hover:border-purple-500 flex items-center justify-center"
+                    :class="{'border-indigo-600': activeImage === image }"
+                ><img :src="image" alt="" class="object-cover"></a>
+                <a 
+                    @click="activeImage = image"
+                    class="cursor-pointer w-[100px] border border-gray-300 hover:border-purple-500 flex items-center justify-center"
+                    :class="{'border-indigo-600': activeImage === image }"
+                ><img :src="image" alt="" class="object-cover"></a>
+            </template>
+            
+        </div>
     </div>
     
     <!-- Accordion -->
 
+    <div x-data="{
+        items: [
+            {title: 'Item 1', body: 'Body 1'},
+            {title: 'Item 2', body: 'Body 2'},
+            {title: 'Item 3', body: 'Body 3'},
+            {title: 'Item 4', body: 'Body 4'},
+        ], 
+        activeItem: null 
+    }"
+        class="m-3"
+    >
+        <template x-for="item in items">
+            <div>
+                <div  
+                    class="py-1 px-2 bg-gray-50 border hover:text-blue-400 font-semibold
+                    flex justify-between items-center"
+                    @click="activeItem = activeItem == null ? item : null"
+                >
+                    <span x-text="item.title"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" 
+                        class="size-5 ml-2 transition-all"
+                        :class="{ 'rotate-90': activeItem === item }"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </div>
+                <div x-show="activeItem === item" 
+                    x-html="item.body" 
+                    class="p-2 bg-white border"
+                    x-transition
+                ></div>
+            </div>
+        </template>
+    </div>
+
     <!-- Notification -->
 
+    <div x-data="{
+        visible: true,
+        timeout: 5000,
+        percent: 0,
+        interval: null,
+        close() {
+            this.visible = false
+            clearInterval(this.interval)
+        },
+        init () {
+            setTimeout(() => {
+                this.visible = false
+            }, this.timeout)
+            const startDate = Date.now()
+            const futureDate = Date.now() + this.timeout
+            const interval = setInterval(() => {
+                const date = Date.now()
+                
+                this.percent = (date - startDate) * 100 / (futureDate - startDate)
+                if(this.percent >= 100) {
+                    clearInterval(this.interval)
+                }
+            }, 30);
+        },
+        get_percent() {
+
+        }
+    }"
+        x-show="visible"
+        class="py-2 px-4 pb-4 bg-emerald-600 text-white relative"
+    >
+        <div class="font-semibold mb-2"> Lorem </div>
+        <div class="text-sm"> 
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+            Maiores odio ipsam, omnis ad consequuntur dolore rerum iure. 
+            Quisquam totam minima iusto non et ratione sed excepturi. Officia blanditiis eos accusantium? 
+        </div>
+        <button 
+            class="absolute flex items-center justify-center right-2 top-2 w-[30px] h-[30px] rounded-full hover:bg-black/10 transition-colors"
+            @click="close"    
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <!-- Progress -->
+        <div>
+            <div 
+                class="absolute left-0 bottom-0 right-0 rounded h-[10px] bg-black/10"
+                :style="{'width': `${percent}%`}"    
+            ></div>
+        </div>
+    </div>
+
     <!-- Popover -->
+
+    <div x-data="{
+        show: false,
+        title: 'Test popover',
+        message: 'Test popover message'
+    }"
+        class="relative flex justify-center items-center"
+    >
+        <button 
+            @click="show = true"
+            class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
+            inline-flex items-center"
+        >Popover</button>
+        <div x-show="show" x-transition class="absolute bottom-[100%] shadow-lg bg-white w-[200px] rounded py-1 px-2">
+            <!-- Header -->
+            <div class="flex justify-between items-center">
+                <span x-text="title"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+
+            </div>
+            <!-- Body -->
+            <div x-html="message" class="p-3 text-small"></div> 
+        </div>
+    </div>
+    <!-- 3:27:45 -->
+
 </body>
 </html>
