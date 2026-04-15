@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100 p-6">
     <!-- Dropdown  -->
-    <div x-data="{open: false}">
+    <div x-data="{open: false}" class="relative">
         <button 
             class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
             inline-flex items-center" 
@@ -30,7 +30,7 @@
             @click.outside="open = false" 
             x-transition
 
-            class="bg-white w-[160px] shadow-md py-1"
+            class="bg-white w-[160px] shadow-md py-1 absolute"
         >
             <li>
                 <a class="py-1 px-2 hover:bg-gray-200 block" href="#">Open</a>
@@ -43,7 +43,11 @@
             </li>
         </ul>
     </div>
-
+    
+    <br>
+    <hr>
+    <br>
+    
     <!-- Modal -->
 
     <div 
@@ -117,7 +121,11 @@
             </div>
         </template>
     </div>
-
+    
+    <br>
+    <hr>
+    <br>
+    
     <!-- Tabs -->
     
     <div x-data="{
@@ -152,7 +160,11 @@
             </div>
         </div>
     </div>
-
+    
+    <br>
+    <hr>
+    <br>
+    
     <!-- Carousel -->
 
     <div x-data="{
@@ -223,6 +235,10 @@
         </div>
     </div>
     
+    <br>
+    <hr>
+    <br>
+        
     <!-- Accordion -->
 
     <div x-data="{
@@ -259,7 +275,11 @@
             </div>
         </template>
     </div>
-
+    
+    <br>
+    <hr>
+    <br>
+    
     <!-- Notification -->
 
     <div x-data="{
@@ -315,22 +335,31 @@
             ></div>
         </div>
     </div>
-
+    
+    <br>
+    <hr>
+    <br>
+    
     <!-- Popover -->
 
     <div x-data="{
         show: false,
         title: 'Test popover',
-        message: 'Test popover message'
+        message: 'Test popover message',
+        showPopover() {
+            console.log(this.$refs.button, this.$refs.popover)
+            this.show = !this.show
+        }
     }"
         class="relative flex justify-center items-center"
     >
         <button 
-            @click="show = true"
+            x-ref="button"
+            @click="showPopover"
             class="py-2 px-6 bg-purple-600 hover:bg-purple-400 text-white rounded-md shadow
             inline-flex items-center"
         >Popover</button>
-        <div x-show="show" x-transition class="absolute bottom-[100%] shadow-lg bg-white w-[200px] rounded py-1 px-2">
+        <div x-ref="popover" x-show="show" x-transition class="absolute bottom-[100%] shadow-lg bg-white w-[200px] rounded py-1 px-2">
             <!-- Header -->
             <div class="flex justify-between items-center">
                 <span x-text="title"></span>
